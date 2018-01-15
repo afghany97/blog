@@ -1,6 +1,12 @@
 @extends('layouts.master')
 
 @section("content")
+<main role="main" class="container">
+
+                <div class="row">
+            
+                    <div class="col-sm-8 blog-main">
+                                <div class="blog-post">
         <h2 class="blog-post-title">{{$post->title}} &#09 
                 @if(\Auth::check())
                 {{--  start like section  --}}
@@ -48,7 +54,7 @@
 
         </h2>
         <P class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} by {{$post->user->name}}</p>
-        <p>{{$post->content}}</p>
+        <p class="blog-post-meta">{{$post->content}}</p>
         {{--  start comments section  --}}
         @if(\Auth::check())
                 <ul>
@@ -192,4 +198,7 @@
                 {{--  end comment section  --}}
                 <hr>
         @endif
+</div>
+</div>
+
 @endsection

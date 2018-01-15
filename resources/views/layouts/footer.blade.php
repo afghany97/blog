@@ -1,7 +1,5 @@
-</div><!-- /.row -->
-
-</main><!-- /.container -->
-<hr>
+</div> {{-- row    --}}
+</main>
 <footer class="blog-footer">
   <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a></p>
   <p>
