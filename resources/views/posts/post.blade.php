@@ -1,11 +1,6 @@
 @extends('layouts.master')
 
 @section("content")
-<main role="main" class="container">
-
-                <div class="row">
-            
-                    <div class="col-sm-8 blog-main">
                                 <div class="blog-post">
         <h2 class="blog-post-title">{{$post->title}} &#09 
                 @if(\Auth::check())
@@ -59,7 +54,6 @@
         @if(\Auth::check())
             @include('comments.view')
         @endif
-</div>
 </div>
 
 @endsection

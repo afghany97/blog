@@ -24,7 +24,7 @@ class postscontroller extends Controller
     }
     protected function index()
     {
-        return view('posts.posts' , ['posts' => Post::latest()->get()]);
+        return view('posts.posts' , ['posts' => Post::latest()->Filter(request(['month', 'year']))->get()]);
     }
 
     /**
@@ -46,7 +46,7 @@ class postscontroller extends Controller
     protected function store(Request $request)
     {
         $this->validate(request(),[
-            'title' => 'required|unique:posts|max:25',
+            'title' => 'required|unique:posts|max:50',
             'content' => 'required|min:10'
         ]);
         $post = Post::create($request->all());
