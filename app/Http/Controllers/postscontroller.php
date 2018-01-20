@@ -51,6 +51,7 @@ class postscontroller extends Controller
         ]);
         $post = Post::create($request->all());
         $post->update(['user_id' => \Auth::id()]);
+        session()->flash('message' , 'your post created successfully');
         return redirect('posts');
     }
 
