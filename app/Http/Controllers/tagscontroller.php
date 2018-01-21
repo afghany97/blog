@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Tag;
 
 class tagscontroller extends Controller
@@ -47,7 +48,9 @@ class tagscontroller extends Controller
     public function show($name)
     {
          $id = Tag::where('name' , $name)->pluck('id')[0];
+       
          $tag = Tag::find($id);
+       
          return view('tags.view')->with('posts' , $tag->posts);
     }
 

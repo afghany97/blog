@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -18,6 +19,7 @@ class User extends Authenticatable
     //     'name', 'email', 'password',
     // ];
     protected $table = "users";
+    
     protected $guarded = [];
 
     /**
@@ -44,6 +46,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reply::class);
     }
-
 
 }

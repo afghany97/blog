@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Like;
+
 use App\User;
+
 use Illuminate\Http\Request;
 
 class likesController extends Controller
@@ -37,6 +39,7 @@ class likesController extends Controller
     public function store(Request $request)
     {
         Like::create($request->all());
+
         return back();
     }
 
@@ -86,22 +89,42 @@ class likesController extends Controller
     }
     public function postLikes()
     {
-        $likes = Like::where([['post_id' , '=' , request('post_id')] , ['comment_id' , '=' , null] , ['reply_id' , '=' , null]])->pluck('user_id');
+        $likes = Like::where(
+            [
+                ['post_id' , '=' , request('post_id')] ,
+                ['comment_id' , '=' , null] ,
+                ['reply_id' , '=' , null]
+            ])
+        ->pluck('user_id');
+        
         $users = [];
+        
         $counter = 0;
+        
         foreach($likes as $user_id)
         {
             $users[$counter++] = User::find($user_id)->name;
         }
+        
         return view('likes.view' , ['users' => $users]);
-
     }
+
     public function commentLikes()
     {
-        $likes = Like::where([['post_id' , '=' , request('post_id')] , ['comment_id' , '=' , request('comment_id')] , ['reply_id' , '=' , null]])->pluck('user_id');
+        $likes = Like::where(
+            [
+                ['post_id' , '=' , request('post_id')] ,
+                ['comment_id' , '=' , request('comment_id')] ,
+                ['reply_id' , '=' , null]
+        ])
+        ->pluck('user_id');
+        
         $users = [];
+        
         $counter = 0;
+        
         foreach($likes as $user_id)
+        
             $users[$counter++] = User::find($user_id)->name;
 
         return view('likes.view' , ['users' => $users]);
@@ -109,29 +132,65 @@ class likesController extends Controller
     }
     public function replyLikes()
     {
-        $likes = Like::where([['post_id' , '=' , request('post_id')] , ['comment_id' , '=' , request('comment_id')] , ['reply_id' , '=' , request('reply_id')]])->pluck('user_id');
+        $likes = Like::where(
+            [
+                ['post_id' , '=' , request('post_id')] ,
+                ['comment_id' , '=' , request('comment_id')] ,
+                ['reply_id' , '=' , request('reply_id')]
+        ])
+        ->pluck('user_id');
+        
         $users = [];
+        
         $counter = 0;
+        
         foreach($likes as $user_id)
         {
             $users[$counter++] = User::find($user_id)->name;
         }
+        
         return view('likes.view' , ['users' => $users]);
-
     }
+    
     public function deletePostLike()
     {
-        $like = Like::where([ ['user_id' , '=' , request('user_id')] , ['post_id' , '=' , request('post_id')] ,['comment_id' , '=' , null]  , ['reply_id' , '=' , null] ])->delete();
+        $like = Like::where(
+            [
+                ['user_id' , '=' , request('user_id')] ,
+                ['post_id' , '=' , request('post_id')] ,
+                ['comment_id' , '=' , null]  ,
+                ['reply_id' , '=' , null]
+            ])
+        ->delete();
+        
         return back();
     }
+    
     public function deleteCommentLike()
     {
-        $like = Like::where([ ['user_id' , '=' , request('user_id')] , ['post_id' , '=' , request('post_id')] ,['comment_id' , '=' , request('comment_id')]  , ['reply_id' , '=' , null]])->delete();
+        $like = Like::where(
+            [
+                ['user_id' , '=' , request('user_id')] ,
+                ['post_id' , '=' , request('post_id')] ,
+                ['comment_id' , '=' , request('comment_id')]  ,
+                ['reply_id' , '=' , null]
+            ])
+        ->delete();
+        
         return back();
     }
+    
     public function deleteReplyLike()
     {
-        $like = Like::where([ ['user_id' , '=' , request('user_id')] , ['post_id' , '=' , request('post_id')] , ['comment_id' , '=' , request('comment_id')], ['reply_id' , '=' , request('reply_id')]])->delete();
+        $like = Like::where(
+            [
+                ['user_id' , '=' , request('user_id')] ,
+                ['post_id' , '=' , request('post_id')] ,
+                ['comment_id' , '=' , request('comment_id')] ,
+                ['reply_id' , '=' , request('reply_id')]
+            ])
+        ->delete();
+        
         return back();
     }
 }

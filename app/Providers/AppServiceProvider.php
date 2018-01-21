@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+
 use Schema;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,11 +16,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        
         view()->composer('layouts.side',function($view){
-            $view->with(['archives' => \App\Post::archives() , 'tags' => \App\Tag::all()]);
+        
+            $view->with(['archives' => \App\Post::archives() , 'tags' => \App\Tag::latest()->get()]);
         });
+       
        view()->composer('posts.create',function($view){
-            $view->with(['tags' => \App\Tag::all()]);
+
+            $view->with(['tags' => \App\Tag::latest()->get()]);
         });
     }
 

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Comment;
+
 use App\Reply;
 
 class commentscontroller extends Controller
@@ -39,7 +41,9 @@ class commentscontroller extends Controller
         $this->validate(request(),[
             'content' => 'required'
         ]);
+
         $comment = Comment::create($request->all());
+
         return back();
     }
 
@@ -86,10 +90,13 @@ class commentscontroller extends Controller
     public function destroy($id)
     {
         $counter = Comment::where('post_id' , '=' , $id)->count();
+       
         $comments = Comment::where('post_id','=',$id)->get();
+       
         for($i = 0; $i < $counter; $i++)
         {
                 $reply = Reply::where('comment_id' , '=' , $comments[$i]['id'])->delete(); 
+       
                 $comment = Comment::where('post_id','=',$id)->delete();
         }
         return back();

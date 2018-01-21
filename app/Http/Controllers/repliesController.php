@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Reply;
+
 use Illuminate\Http\Request;
 
 class repliesController extends Controller
@@ -36,10 +37,21 @@ class repliesController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(),[
+            
             'content' => 'required'
         ]);
+
         $reply = Reply::create($request->all());
-        $reply->update(['post_id' => request('post_id') , 'user_id' => request('user_id') , 'comment_id' => request('comment_id')]);
+
+        $reply->update(
+            [
+                'post_id' => request('post_id') ,
+                
+                'user_id' => request('user_id') ,
+                
+                'comment_id' => request('comment_id')
+            ]);
+
         return back();
     }
 
@@ -86,6 +98,7 @@ class repliesController extends Controller
     public function destroy()
     {
         $reply = Reply::where('comment_id' , '=' , request('id'))->delete();
+        
         return back();
     }
 }
