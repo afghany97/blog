@@ -49,6 +49,12 @@
 
         </h2>
         <P class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} by {{$post->user->name}}</p>
+        @if($post->tags)
+            <h5>Post Tags</h5>
+                @foreach ($post->tags as $tag)
+                        <a href="/tags/{{$tag->name}}"> {{$tag->name }} ,  </a>
+                @endforeach
+        @endif  
         <p class="blog-post-meta">{{$post->content}}</p>
         {{--  start comments section  --}}
         @if(\Auth::check())

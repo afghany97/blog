@@ -16,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         view()->composer('layouts.side',function($view){
-            $view->with('archives' , \App\Post::archives());
+            $view->with(['archives' => \App\Post::archives() , 'tags' => \App\Tag::all()]);
+        });
+       view()->composer('posts.create',function($view){
+            $view->with(['tags' => \App\Tag::all()]);
         });
     }
 

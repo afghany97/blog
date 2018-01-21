@@ -43,6 +43,14 @@ Route::post('post/{id}/comment-likes','likesController@commentLikes');
 
 Route::post('post/{id}/reply-likes','likesController@replyLikes');
 
+
+
+Route::get('/tags/{tag}','tagscontroller@show');
+
+
+
+
+
 Route::get('/', function () {
     return redirect('posts');
 });

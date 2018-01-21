@@ -8,7 +8,8 @@ use App\Comment;
 use App\Reply;
 use App\Like;
 use App\User;
-
+use App\Tag;
+use App\post_tag;
 // use Illuminate\Support\Facades\Auth;
 
 class postscontroller extends Controller
@@ -49,8 +50,30 @@ class postscontroller extends Controller
             'title' => 'required|unique:posts|max:50',
             'content' => 'required|min:10'
         ]);
-        $post = Post::create($request->all());
+        $post = Post::create($request->except('tags' , 'newtags'));
         $post->update(['user_id' => \Auth::id()]);
+        $tags_array = [];
+        $c = 0;
+        if(request('tags') != null)
+        {
+            $tags_array = request('tags');
+        }
+        $newtags_array = [];
+        $c = 0;
+        if(request('newtags') != null)
+        {
+            $t = Tag::insert_tags(request('newtags'));
+            foreach ($t as $key) 
+            {
+                $newtags_array[$c++] = $key->name;
+            }
+        }
+        $temp = array_merge($tags_array , $newtags_array);
+        $tags = array_unique($temp);
+        foreach ($tags as $tag) 
+        {
+            post_tag::create(['post_id' => $post->id , 'tag_id' => Tag::where('name' , $tag)->pluck('id')[0]]);
+        }
         session()->flash('message' , 'your post created successfully');
         return redirect('posts');
     }
